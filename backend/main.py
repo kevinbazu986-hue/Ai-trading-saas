@@ -1,1 +1,28 @@
 
+from fastapi import FastAPI
+from database import SessionLocal
+from models import User
+
+app = FastAPI()
+
+@app.get("/")
+def home():
+    return {"status": "running"}
+
+@app.get("/register")
+def register(user_id: str):
+    db = SessionLocal()
+    user = User(user_id=user_id, vip=False)
+    db.add(user)
+    db.commit()
+    return {"status": "registered"}
+
+@app.get("/signals")
+def signals(user_id: str):
+    db = SessionLocal()
+    user = db.query(User).filter(User.user_id == user_id).first()
+
+    if not user or not user.vip:
+        return {"error": "VIP only"}
+
+    return {"signal": "BUY BTC"}
