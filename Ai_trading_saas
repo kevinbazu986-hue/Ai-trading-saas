@@ -1,3 +1,0 @@
-git remote add origin https://github.com/kevinbazu986-hue/Ai-trading-saas.git
-git branch -M main
-git push -u origin main
